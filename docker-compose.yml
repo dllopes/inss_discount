@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        RAILS_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/inss_discount_development
+      REDIS_URL: redis://redis:6379/0
+    command: bundle exec rails server -b 0.0.0.0
+
+  sidekiq:
+    build:
+      context: .
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+      - db
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: inss_discount_development
+    ports:
+      - "5432:5432"
