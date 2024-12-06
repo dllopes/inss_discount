@@ -54,6 +54,9 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'dotenv-rails', '~> 2.7', '>= 2.7.5'
   gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
@@ -75,3 +78,6 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'rspec-sidekiq'
 end
+
+gem 'kaminari'
+gem 'simple_form'
