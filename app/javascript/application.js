@@ -6,3 +6,5 @@ import "controllers"
 // import "@popperjs/core"
 import "chartkick"
 import "Chart.bundle"
+import Rails from "@rails/ujs";
+Rails.start();

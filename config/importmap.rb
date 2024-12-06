@@ -13,3 +13,4 @@ pin "@popperjs/core", to: "@popperjs--core.js" # @2.11.8
 pin "@kurkle/color", to: "@kurkle--color.js" # @0.3.4
 pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
+pin "@rails/ujs", to: "@rails--ujs.js" # @7.1.3

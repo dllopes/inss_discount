@@ -53,7 +53,8 @@ ENV RAILS_ENV="development" \
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     libpq-dev \
-    libvips && \
+    libvips \
+    postgresql-client && \
     rm -rf /var/lib/apt/lists/*
 
 # Copiar artefatos do estágio base
