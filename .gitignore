@@ -91,3 +91,5 @@ doc/*
 # Ignore .DS_Store
 .DS_Store
 
+/package.json
+/yarn.lock
