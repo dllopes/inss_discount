@@ -1,0 +1,40 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="container mt-4">
+  <h1 class="text-primary text-center mb-4">Proponents</h1>
+
+  <div class="text-end mb-3">
+    <%= link_to 'New Proponent', new_proponent_path, class: 'btn btn-success' %>
+  </div>
+
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>CPF</th>
+      <th>Birth Date</th>
+      <th>Salary</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @proponents.each do |proponent| %>
+      <tr>
+        <td><%= proponent.name %></td>
+        <td><%= proponent.cpf %></td>
+        <td><%= proponent.birth_date %></td>
+        <td><%= number_to_currency(proponent.salary, unit: "R$", separator: ",", delimiter: ".") %></td>
+        <td>
+          <%= link_to 'Show', proponent, class: 'btn btn-info btn-sm' %>
+          <%= link_to 'Edit', edit_proponent_path(proponent), class: 'btn btn-warning btn-sm' %>
+          <%= link_to 'Delete', proponent, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-center">
+    <%= paginate @proponents %>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="container mt-5">
+  <% if notice %>
+    <div class="alert alert-success" role="alert">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <%= render @proponent %>
+
+  <div class="d-flex mt-4 align-items-start gap-2">
+    <%= link_to "Edit this proponent", edit_proponent_path(@proponent), class: "btn btn-primary" %>
+    <%= link_to "Back to proponents", proponents_path, class: "btn btn-secondary" %>
+    <%= button_to "Destroy this proponent", @proponent, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</div>

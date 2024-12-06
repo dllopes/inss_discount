@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header text-white bg-primary">
+    <h4 class="mb-0">Proponent Details</h4>
+  </div>
+  <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-4">Name</dt>
+      <dd class="col-sm-8"><%= proponent.name %></dd>
+
+      <dt class="col-sm-4">CPF</dt>
+      <dd class="col-sm-8"><%= proponent.cpf %></dd>
+
+      <dt class="col-sm-4">Birth Date</dt>
+      <dd class="col-sm-8"><%= proponent.birth_date.strftime('%d/%m/%Y') %></dd>
+
+      <dt class="col-sm-4">Personal Phone</dt>
+      <dd class="col-sm-8"><%= proponent.personal_phone %></dd>
+
+      <dt class="col-sm-4">Reference Phone</dt>
+      <dd class="col-sm-8"><%= proponent.reference_phone.presence || "N/A" %></dd>
+
+      <dt class="col-sm-4">Salary</dt>
+      <dd class="col-sm-8"><%= number_to_currency(proponent.salary, unit: "R$", separator: ",", delimiter: ".") %></dd>
+    </dl>
+  </div>
+</div>

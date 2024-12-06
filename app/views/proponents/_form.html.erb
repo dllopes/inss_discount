@@ -1,0 +1,67 @@
+<%= simple_form_for(proponent, html: { class: "styled-form", data: { controller: "salary", salary_url_value: calculate_discount_proponents_path } }) do |form| %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= form.input :name, label: 'Name' %>
+    </div>
+    <div class="col-md-6">
+      <%= form.input :cpf, label: 'CPF' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= form.input :birth_date, as: :date, label: 'Birth Date' %>
+    </div>
+    <div class="col-md-6">
+      <%= form.input :personal_phone, label: 'Personal Phone' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= form.input :reference_phone, label: 'Reference Phone' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= form.input :salary, as: :decimal, step: 0.01, label: 'Salary', input_html: { data: { action: "input->salary#calculate", salary_target: "salaryInput" } } %>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend>Address</legend>
+    <%= form.simple_fields_for :address do |address_form| %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= address_form.input :street, label: 'Street' %>
+        </div>
+        <div class="col-md-6">
+          <%= address_form.input :number, label: 'Number' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= address_form.input :neighborhood, label: 'Neighborhood' %>
+        </div>
+        <div class="col-md-6">
+          <%= address_form.input :city, label: 'City' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= address_form.input :state, label: 'State' %>
+        </div>
+        <div class="col-md-6">
+          <%= address_form.input :zip_code, label: 'Zip Code' %>
+        </div>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <div class="form-group">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
