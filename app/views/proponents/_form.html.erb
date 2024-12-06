@@ -27,6 +27,9 @@
     <div class="col-md-6">
       <%= form.input :salary, as: :decimal, step: 0.01, label: 'Salary', input_html: { data: { action: "input->salary#calculate", salary_target: "salaryInput" } } %>
     </div>
+    <div class="col-md-6">
+      <%= form.input :inss_discount, as: :string, label: 'INSS Discount', input_html: { readonly: true, data: { salary_target: "discountInput" } } %>
+    </div>
   </div>
 
   <fieldset>

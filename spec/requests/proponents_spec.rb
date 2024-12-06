@@ -162,4 +162,20 @@ RSpec.describe 'Proponents', type: :request do
       expect(response).to redirect_to(proponents_url)
     end
   end
+
+  describe 'POST /calculate_discount' do
+    let(:request_params) { { salary: 5000.0 } }
+
+    def post_request
+      post calculate_discount_proponents_path, params: request_params
+    end
+
+    it 'returns the correct INSS discount' do
+      allow(Proponent).to receive(:calculate_inss_discount).and_return(600.0)
+      post_request
+      expect(response.content_type).to eq('application/json; charset=utf-8')
+      json_response = JSON.parse(response.body)
+      expect(json_response['inss_discount']).to eq(600.0)
+    end
+  end
 end

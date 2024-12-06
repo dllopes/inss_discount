@@ -1,0 +1,94 @@
+/* Heading styling */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40; /* Bootstrap dark color */
+}
+
+/* Back link styling */
+a {
+    display: inline-block;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #007bff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a:hover {
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Container styling */
+/* Aplicar estilos apenas ao formulário com a classe 'styled-form' */
+form.styled-form {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    margin-top: 20px;
+}
+
+form.styled-form .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da; /* Bootstrap default border */
+    transition: border-color 0.3s ease;
+}
+
+form.styled-form .form-control:focus {
+    border-color: #007bff; /* Bootstrap primary color */
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+form.styled-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+form.styled-form fieldset {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+form.styled-form legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #343a40;
+    padding: 0 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+form.styled-form .btn-primary {
+    background-color: #007bff; /* Bootstrap primary */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+form.styled-form .btn-primary:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+
+form.styled-form .row {
+    margin-bottom: 15px;
+}
+
+form.styled-form .col-md-6 {
+    padding-right: 10px;
+    padding-left: 10px;
+}

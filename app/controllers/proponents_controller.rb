@@ -39,6 +39,13 @@ class ProponentsController < ApplicationController
     redirect_to proponents_url, notice: 'Proponent was successfully deleted.'
   end
 
+  def calculate_discount
+    salary = params[:salary].to_f
+    inss_discount = Proponent.calculate_inss_discount(salary)
+
+    render json: { inss_discount: inss_discount }
+  end
+
   private
 
   def set_proponent
