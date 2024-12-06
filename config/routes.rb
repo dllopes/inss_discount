@@ -3,12 +3,17 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :reports, only: [:index]
+  resources :reports, only: [:index] do 
+    collection do
+      post :generate
+    end
+  end
 
   mount Sidekiq::Web => '/sidekiq'
   resources :proponents do
     collection do
       post :calculate_discount
+      get :report
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

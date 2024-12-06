@@ -1,5 +1,13 @@
 class ReportsController < ApplicationController
   def index
-    @salary_ranges = Proponent.all.group_by(&:salary_range).transform_values(&:count)
+    @salary_ranges = ProponentSalaryReport.all.pluck(:salary_range, :proponent_count)
+  end
+
+  def generate
+    UpdateProponentSalaryReportJob.perform_later
+
+    respond_to do |format|
+      format.js { render :generate }
+    end
   end
 end
