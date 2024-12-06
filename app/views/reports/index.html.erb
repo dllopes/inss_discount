@@ -17,4 +17,4 @@
   </tbody>
 </table>
 
-<%= pie_chart Proponent.all.group_by(&:salary_range).transform_values(&:count) %>
+<%= pie_chart @salary_ranges %>
