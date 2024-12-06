@@ -30,4 +30,13 @@ class Proponent < ApplicationRecord
 
     discount.truncate(2)
   end
+
+  def salary_range
+    case salary
+    when 0..1045 then 'Até R$ 1.045,00'
+    when 1045.01..2089.60 then 'De R$ 1.045,01 a R$ 2.089,60'
+    when 2089.61..3134.40 then 'De R$ 2.089,61 até R$ 3.134,40'
+    else 'De R$ 3.134,41 até R$ 6.101,06'
+    end
+  end
 end

@@ -81,3 +81,4 @@ end
 
 gem 'kaminari'
 gem 'simple_form'
+gem 'chartkick', '~> 5.1', '>= 5.1.2'

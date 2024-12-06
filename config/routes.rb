@@ -3,6 +3,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resources :reports, only: [:index]
+
   mount Sidekiq::Web => '/sidekiq'
   resources :proponents do
     collection do

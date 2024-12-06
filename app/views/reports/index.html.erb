@@ -1,0 +1,20 @@
+<h1>Relatório de Proponentes</h1>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Faixa Salarial</th>
+    <th>Quantidade</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @salary_ranges.each do |range, count| %>
+    <tr>
+      <td><%= range %></td>
+      <td><%= count %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= pie_chart Proponent.all.group_by(&:salary_range).transform_values(&:count) %>
