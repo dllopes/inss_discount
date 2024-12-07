@@ -26,7 +26,9 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/*
 
 # Instalar o Bundler
-RUN gem install bundler -v 2.5.14
+RUN gem install bundler -v 2.5.14 && \
+    bundle config set --global path "$BUNDLE_PATH" && \
+    bundler -v
 
 # Copiar Gemfile e instalar gems
 COPY Gemfile Gemfile.lock ./
@@ -64,7 +66,8 @@ COPY --from=base /rails /rails
 
 # Configurar permissões e criar usuário não-root
 RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails db log storage tmp && \
+    bundler -v
 USER rails
 
 # Expor portas
