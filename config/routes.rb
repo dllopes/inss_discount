@@ -4,7 +4,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   devise_for :users
-  resources :reports, only: [:index] do 
+  resources :reports, only: [:index] do
     collection do
       post :generate
     end
@@ -26,5 +26,5 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   # Defines the root path route ("/")
-  root "proponents#index"
+  root 'proponents#index'
 end

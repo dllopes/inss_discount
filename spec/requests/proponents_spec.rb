@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Proponents', type: :request do
@@ -60,9 +62,9 @@ RSpec.describe 'Proponents', type: :request do
       let(:request_params) { { proponent: valid_attributes } }
 
       it 'creates a new Proponent' do
-        expect {
+        expect do
           post_request
-        }.to change(Proponent, :count).by(1)
+        end.to change(Proponent, :count).by(1)
       end
 
       it 'redirects to the created proponent' do
@@ -75,9 +77,9 @@ RSpec.describe 'Proponents', type: :request do
       let(:request_params) { { proponent: invalid_attributes } }
 
       it 'does not create a new Proponent' do
-        expect {
+        expect do
           post_request
-        }.not_to change(Proponent, :count)
+        end.not_to change(Proponent, :count)
       end
 
       it 'returns an unprocessable entity response' do
@@ -104,9 +106,9 @@ RSpec.describe 'Proponents', type: :request do
     end
 
     it 'destroys the requested proponent' do
-      expect {
+      expect do
         delete_request
-      }.to change(Proponent, :count).by(-1)
+      end.to change(Proponent, :count).by(-1)
     end
 
     it 'redirects to the proponents list' do
@@ -123,10 +125,11 @@ RSpec.describe 'Proponents', type: :request do
     end
 
     it 'returns the correct INSS discount' do
-      allow(SalaryCalculator).to receive(:new).with(5000.0).and_return(instance_double(SalaryCalculator, calculate_inss_discount: 600.0))
+      allow(SalaryCalculator).to receive(:new).with(5000.0).and_return(instance_double(SalaryCalculator,
+                                                                                       calculate_inss_discount: 600.0))
       post_request
       expect(response.content_type).to eq('application/json; charset=utf-8')
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
       expect(json_response['inss_discount']).to eq(600.0)
     end
   end

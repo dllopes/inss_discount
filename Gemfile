@@ -79,8 +79,8 @@ group :test do
   gem 'rspec-sidekiq'
 end
 
-gem 'kaminari'
-gem 'simple_form'
 gem 'chartkick', '~> 5.1', '>= 5.1.2'
 gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'
+gem 'kaminari'
+gem 'simple_form'

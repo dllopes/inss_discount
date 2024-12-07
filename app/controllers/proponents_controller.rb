@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProponentsController < ApplicationController
   before_action :set_proponent, only: %i[show edit update destroy]
 
@@ -12,6 +14,10 @@ class ProponentsController < ApplicationController
     @proponent.build_address
   end
 
+  def edit
+    @proponent.build_address unless @proponent.address
+  end
+
   def create
     @proponent = Proponent.new(proponent_params)
 
@@ -20,10 +26,6 @@ class ProponentsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @proponent.build_address unless @proponent.address
   end
 
   def update
@@ -55,7 +57,7 @@ class ProponentsController < ApplicationController
   def proponent_params
     params.require(:proponent).permit(
       :name, :cpf, :birth_date, :personal_phone, :reference_phone, :salary,
-      address_attributes: [:street, :number, :neighborhood, :city, :state, :zip_code]
+      address_attributes: %i[street number neighborhood city state zip_code]
     )
   end
 end

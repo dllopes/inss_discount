@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Proponent < ApplicationRecord
   has_one :address, dependent: :destroy
   accepts_nested_attributes_for :address

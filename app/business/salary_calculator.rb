@@ -21,6 +21,7 @@ class SalaryCalculator < ApplicationBusiness
   def initialize(salary)
     super()
     raise ArgumentError, 'Salary must be positive' if salary.nil? || salary <= 0
+
     @salary = salary
   end
 
