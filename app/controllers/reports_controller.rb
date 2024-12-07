@@ -6,8 +6,6 @@ class ReportsController < ApplicationController
   def generate
     UpdateProponentSalaryReportJob.perform_later
 
-    respond_to do |format|
-      format.js { render :generate }
-    end
+    respond_to(&:js)
   end
 end

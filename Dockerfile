@@ -54,6 +54,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     libpq-dev \
     libvips \
+    redis-tools \
     postgresql-client && \
     rm -rf /var/lib/apt/lists/*
 

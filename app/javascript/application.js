@@ -7,4 +7,6 @@ import "controllers"
 import "chartkick"
 import "Chart.bundle"
 import Rails from "@rails/ujs";
+import "./channels/report_status_channel";
+
 Rails.start();

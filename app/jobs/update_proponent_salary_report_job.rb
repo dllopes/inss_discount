@@ -17,5 +17,7 @@ class UpdateProponentSalaryReportJob < ApplicationJob
       count = Proponent.where(salary: range).count
       ProponentSalaryReport.create!(salary_range: range_name, proponent_count: count)
     end
+
+    ActionCable.server.broadcast('report_status_channel', { message: 'Relatório pronto!' })
   end
 end
