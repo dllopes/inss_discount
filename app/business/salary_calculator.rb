@@ -38,7 +38,6 @@ class SalaryCalculator < ApplicationBusiness
     call
   end
 
-
   def salary_range
     SALARY_RANGES.each do |range, label|
       return label if range.include?(salary)
