@@ -7,14 +7,12 @@ export default class extends Controller {
     }
 
     connect() {
-        console.log("SalaryController conectado!");
         this.calculate = this.debounce(this.calculate.bind(this), 500)
     }
 
     calculate() {
         const salary = this.salaryInputTarget.value
-
-        // Exibir mensagem de carregamento
+        
         this.discountInputTarget.value = "Calculando..."
 
         fetch(this.urlValue, {

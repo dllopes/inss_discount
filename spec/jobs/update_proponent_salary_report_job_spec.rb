@@ -20,10 +20,10 @@ RSpec.describe UpdateProponentSalaryReportJob, type: :job do
     described_class.perform_now
 
     expected_counts = {
-      '0-1045' => 5,
-      '1045.01-2089.60' => 3,
-      '2089.61-3134.40' => 2,
-      '3134.41-6101.06' => 4
+      'Até R$ 1.045,00' => 5,
+      'De R$ 1.045,01 a R$ 2.089,60' => 3,
+      'De R$ 2.089,61 até R$ 3.134,40' => 2,
+      'De R$ 3.134,41 até R$ 6.101,06' => 4
     }
 
     expected_counts.each do |range_name, count|
@@ -33,12 +33,13 @@ RSpec.describe UpdateProponentSalaryReportJob, type: :job do
     end
   end
 
-  it 'does not create reports for salary ranges without proponents' do
+  it 'creates reports with count zero for salary ranges without proponents' do
     Proponent.where(salary: 0..1045).destroy_all
 
     described_class.perform_now
 
-    report = ProponentSalaryReport.find_by(salary_range: '0-1045')
+    report = ProponentSalaryReport.find_by(salary_range: 'Até R$ 1.045,00')
+    expect(report).not_to be_nil
     expect(report.proponent_count).to eq(0)
   end
 end

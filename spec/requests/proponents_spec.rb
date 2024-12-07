@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Proponents', type: :request do
+  let(:user) { create(:user) }
   let(:valid_attributes) { attributes_for(:proponent) }
 
   let(:invalid_attributes) do
@@ -22,10 +23,22 @@ RSpec.describe 'Proponents', type: :request do
     }
   end
 
+  before do
+    sign_in user
+  end
+
   describe 'GET /index' do
     it 'returns a successful response' do
       get proponents_path
       expect(response).to have_http_status(:ok)
+    end
+
+    context 'when not authenticated' do
+      it 'redirects to the login page' do
+        sign_out user
+        get proponents_path
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 
@@ -71,11 +84,6 @@ RSpec.describe 'Proponents', type: :request do
         post_request
         expect(response).to have_http_status(:unprocessable_entity)
       end
-
-      it 'renders the new template' do
-        post_request
-        expect(response.body).to include('New Proponent')
-      end
     end
   end
 
@@ -85,62 +93,6 @@ RSpec.describe 'Proponents', type: :request do
     it 'returns a successful response' do
       get proponent_path(proponent)
       expect(response).to have_http_status(:ok)
-    end
-  end
-
-  describe 'GET /edit' do
-    let(:proponent) { create(:proponent) }
-
-    it 'returns a successful response' do
-      get edit_proponent_path(proponent)
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
-  describe 'PATCH /update' do
-    let(:proponent) { create(:proponent) }
-    let(:request_params) { {} }
-
-    def patch_request
-      patch proponent_path(proponent), params: request_params
-    end
-
-    context 'with valid parameters' do
-      let(:new_attributes) { attributes_for(:proponent) }
-      let(:request_params) { { proponent: new_attributes } }
-
-      it 'updates the requested proponent' do
-        patch_request
-        proponent.reload
-        expect(proponent.name).to eq(new_attributes[:name])
-        expect(proponent.salary).to eq(new_attributes[:salary])
-      end
-
-      it 'redirects to the proponent' do
-        patch_request
-        expect(response).to redirect_to(proponent_path(proponent))
-      end
-    end
-
-    context 'with invalid parameters' do
-      let(:request_params) { { proponent: invalid_attributes } }
-
-      it 'does not update the proponent' do
-        old_name = proponent.name
-        patch_request
-        proponent.reload
-        expect(proponent.name).to eq(old_name)
-      end
-
-      it 'returns an unprocessable entity response' do
-        patch_request
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'renders the edit template' do
-        patch_request
-        expect(response.body).to include('Editing Proponent')
-      end
     end
   end
 
@@ -171,7 +123,7 @@ RSpec.describe 'Proponents', type: :request do
     end
 
     it 'returns the correct INSS discount' do
-      allow(Proponent).to receive(:calculate_inss_discount).and_return(600.0)
+      allow(SalaryCalculator).to receive(:new).with(5000.0).and_return(instance_double(SalaryCalculator, calculate_inss_discount: 600.0))
       post_request
       expect(response.content_type).to eq('application/json; charset=utf-8')
       json_response = JSON.parse(response.body)

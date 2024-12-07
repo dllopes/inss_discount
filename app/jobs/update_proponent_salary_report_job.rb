@@ -6,16 +6,10 @@ class UpdateProponentSalaryReportJob < ApplicationJob
   def perform
     ProponentSalaryReport.delete_all
 
-    salary_ranges = {
-      '0-1045' => 0.0..1045.0,
-      '1045.01-2089.60' => 1045.01..2089.60,
-      '2089.61-3134.40' => 2089.61..3134.40,
-      '3134.41-6101.06' => 3134.41..6101.06
-    }
-
-    salary_ranges.each do |range_name, range|
+    SalaryCalculator::SALARY_RANGES.each do |range, label|
       count = Proponent.where(salary: range).count
-      ProponentSalaryReport.create!(salary_range: range_name, proponent_count: count)
+      Rails.logger.info "Range: #{label}, Count: #{count}, Salaries: #{Proponent.where(salary: range).pluck(:salary)}"
+      ProponentSalaryReport.create!(salary_range: label, proponent_count: count)
     end
 
     ActionCable.server.broadcast('report_status_channel', { message: 'Relatório pronto!' })
