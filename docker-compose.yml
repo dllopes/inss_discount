@@ -12,15 +12,16 @@ services:
     volumes:
       - .:/rails
       - bundle_data:/usr/local/bundle
-    user: "${UID}:${GID}" # Garante que o contêiner seja executado com o usuário do host
+    working_dir: /rails
+    user: "${UID}:${GID}"
     depends_on:
       - db
       - redis
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/inss_discount_development
       REDIS_URL: redis://redis:6379/0
-      UID: "${UID}" # Passa UID para o contêiner
-      GID: "${GID}" # Passa GID para o contêiner
+      UID: "${UID}"
+      GID: "${GID}"
     command: >
       bash -c "
         rm -f /rails/tmp/pids/server.pid &&
@@ -29,6 +30,25 @@ services:
         bundle exec rails db:seed && 
         bundle exec rails server -b 0.0.0.0
       "
+
+  test:
+    build:
+      context: .
+      args:
+        RAILS_ENV: test
+    volumes:
+      - .:/rails
+      - bundle_data:/usr/local/bundle
+    working_dir: /rails
+    user: "${UID}:${GID}"
+    depends_on:
+      - db
+      - redis
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/inss_discount_test
+      REDIS_URL: redis://redis:6379/0
+      RAILS_ENV: test
+    command: bash -c "bundle exec rspec"
 
   sidekiq:
     build:
@@ -61,3 +81,4 @@ services:
 
 volumes:
   bundle_data:
+    driver: local
