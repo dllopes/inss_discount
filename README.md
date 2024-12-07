@@ -29,6 +29,3 @@ Para construir as imagens Docker e iniciar os serviços necessários, execute o 
 
 ```bash
 docker-compose up --build
-```
-
-Os serviços do Sidekiq, Redis e Postgres já deverão ser construídos e inicializados com o `docker-compose`.
