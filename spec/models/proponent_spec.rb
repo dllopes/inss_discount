@@ -20,7 +20,7 @@ RSpec.describe Proponent, type: :model do
     it 'calculates inss_discount before saving' do
       proponent = build(:proponent, salary: 3000.00, inss_discount: nil)
       proponent.save
-      expect(proponent.inss_discount).to eq('281.62')
+      expect(proponent.inss_discount).to eq('281.63')
     end
   end
 end

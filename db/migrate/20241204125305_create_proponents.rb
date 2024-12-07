@@ -12,5 +12,7 @@ class CreateProponents < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
+
+    add_index :proponents, :cpf, unique: true
   end
 end

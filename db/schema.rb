@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_181404) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "inss_discount"
+    t.index ["cpf"], name: "index_proponents_on_cpf", unique: true
   end
 
   create_table "users", force: :cascade do |t|
