@@ -38,20 +38,6 @@ class SalaryCalculator < ApplicationBusiness
     call
   end
 
-  def calculate_inss_discount
-    return 0 if salary.nil? || salary <= 0
-
-    adjusted_salary = [salary, MAX_SALARY].min
-
-    BRACKETS.inject(0.0) do |discount, bracket|
-      if adjusted_salary > bracket[:lower_limit]
-        taxable_income = [adjusted_salary, bracket[:upper_limit]].min - bracket[:lower_limit]
-        discount + (taxable_income * bracket[:rate]).truncate(2)
-      else
-        discount
-      end
-    end.truncate(2)
-  end
 
   def salary_range
     SALARY_RANGES.each do |range, label|
@@ -59,5 +45,31 @@ class SalaryCalculator < ApplicationBusiness
     end
 
     'Acima do limite máximo'
+  end
+
+  def calculate_inss_discount
+    return 0 if salary.nil? || salary <= 0
+
+    adjusted_salary = calculate_adjusted_salary(salary)
+    calculate_discount(adjusted_salary).truncate(2)
+  end
+
+  private
+
+  def calculate_adjusted_salary(salary)
+    [salary, MAX_SALARY].min
+  end
+
+  def calculate_discount(adjusted_salary)
+    BRACKETS.sum do |bracket|
+      next 0 if adjusted_salary <= bracket[:lower_limit]
+
+      taxable_income = calculate_taxable_income(adjusted_salary, bracket)
+      taxable_income * bracket[:rate]
+    end
+  end
+
+  def calculate_taxable_income(adjusted_salary, bracket)
+    [adjusted_salary, bracket[:upper_limit]].min - bracket[:lower_limit]
   end
 end
