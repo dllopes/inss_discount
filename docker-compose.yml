@@ -8,7 +8,7 @@ services:
       - "3000:3000"
       - "1234:1234"
     volumes:
-      - .:/app
+      - .:/rails
     depends_on:
       - db
       - redis
@@ -33,7 +33,7 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/inss_discount_development
       REDIS_URL: redis://redis:6379/0
     volumes:
-      - .:/app
+      - .:/rails
 
   redis:
     image: redis:7
