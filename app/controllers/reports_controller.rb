@@ -2,7 +2,7 @@
 
 class ReportsController < ApplicationController
   def index
-    @salary_ranges = ProponentSalaryReport.pluck(:salary_range, :proponent_count)
+    @salary_reports = ProponentSalaryReport.all
   end
 
   def generate

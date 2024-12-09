@@ -6,6 +6,13 @@
     <%= link_to 'New Proponent', new_proponent_path, class: 'btn btn-success' %>
   </div>
 
+  <% if @filter_message.present? %>
+    <div class="alert alert-info">
+      <%= @filter_message %>
+      <%= link_to "Remover filtro", proponents_path, class: "btn btn-sm btn-outline-danger ms-2" %>
+    </div>
+  <% end %>
+
   <table class="table table-striped table-hover">
     <thead class="table-dark">
     <tr>

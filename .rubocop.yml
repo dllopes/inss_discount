@@ -31,3 +31,5 @@ RSpec/MultipleExpectations:
   Enabled: false
 Rails/I18nLocaleTexts:
   Enabled: false
+Rspec/MultipleMemoizedHelpers:
+  Enabled: false

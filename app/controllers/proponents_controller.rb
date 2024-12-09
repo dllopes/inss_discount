@@ -4,7 +4,15 @@ class ProponentsController < ApplicationController
   before_action :set_proponent, only: %i[show edit update destroy]
 
   def index
-    @proponents = Proponent.includes(:address).page(params[:page]).per(5)
+    @proponents = Proponent.includes(:address)
+
+    if params[:report_id].present?
+      report = ProponentSalaryReport.find(params[:report_id])
+      @proponents = @proponents.where(id: report.proponent_ids)
+      @filter_message = "Exibindo proponentes na faixa salarial: #{report.salary_range}"
+    end
+
+    @proponents = @proponents.page(params[:page]).per(5)
   end
 
   def show; end

@@ -8,26 +8,30 @@
       <%= button_to "Gerar Relatório", generate_reports_path, method: :post, remote: true, class: "btn btn-primary", id: "generate-report-btn" %>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col text-center">
       <span id="report-status" class="text-info fw-bold" style="display: none;">Gerando relatório...</span>
     </div>
   </div>
-  
+
   <div class="table-responsive mt-4">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
       <tr>
         <th>Faixa Salarial</th>
         <th>Quantidade</th>
+        <th>Ações</th>
       </tr>
       </thead>
       <tbody>
-      <% @salary_ranges.each do |range, count| %>
+      <% @salary_reports.each do |report| %>
         <tr>
-          <td><%= range %></td>
-          <td><%= count %></td>
+          <td><%= report.salary_range %></td>
+          <td><%= report.proponent_count %></td>
+          <td>
+            <%= link_to "Ver Proponentes", proponents_path(report_id: report.id), class: "btn btn-primary btn-sm" %>
+          </td>
         </tr>
       <% end %>
       </tbody>
@@ -35,6 +39,6 @@
   </div>
 
   <div class="mt-5">
-    <%= pie_chart @salary_ranges, height: '400px', library: { legend: { position: 'bottom' } } %>
+    <%= pie_chart (@salary_reports.map {|s| [s.salary_range, s.proponent_count] }), height: '400px', library: { legend: { position: 'bottom' } } %>
   </div>
 </div>

@@ -7,9 +7,17 @@ class UpdateProponentSalaryReportJob < ApplicationJob
     ProponentSalaryReport.delete_all
 
     SalaryCalculator::SALARY_RANGES.each do |range, label|
-      count = Proponent.where(salary: range).count
-      Rails.logger.info "Range: #{label}, Count: #{count}, Salaries: #{Proponent.where(salary: range).pluck(:salary)}"
-      ProponentSalaryReport.create!(salary_range: label, proponent_count: count)
+      proponents = Proponent.where(salary: range)
+      count = proponents.count
+      ids = proponents.pluck(:id)
+
+      Rails.logger.info "Range: #{label}, Count: #{count}, Salaries: #{proponents.pluck(:salary)}, IDs: #{ids}"
+
+      ProponentSalaryReport.create!(
+        salary_range: label,
+        proponent_count: count,
+        proponent_ids: ids
+      )
     end
 
     ActionCable.server.broadcast('report_status_channel', { message: 'Relatório pronto!' })

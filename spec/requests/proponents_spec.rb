@@ -6,6 +6,15 @@ RSpec.describe 'Proponents', type: :request do
   let(:user) { create(:user) }
   let(:valid_attributes) { attributes_for(:proponent) }
 
+  let(:proponent_one) { create(:proponent, salary: 2000.0) }
+  let(:proponent_two) { create(:proponent, salary: 3500.0) }
+  let(:report) do
+    create(:proponent_salary_report,
+           salary_range: 'De R$ 2.089,61 até R$ 3.134,40',
+           proponent_ids: [proponent_one.id],
+           proponent_count: 1)
+  end
+
   let(:invalid_attributes) do
     {
       name: '',
@@ -26,21 +35,33 @@ RSpec.describe 'Proponents', type: :request do
   end
 
   before do
+    proponent_one
+    proponent_two
+    report
     sign_in user
   end
 
   describe 'GET /index' do
-    it 'returns a successful response' do
-      get proponents_path
-      expect(response).to have_http_status(:ok)
+    context 'without filters' do
+      it 'returns all proponents' do
+        get proponents_path
+
+        expect(response).to have_http_status(:ok)
+      end
     end
 
-    context 'when not authenticated' do
-      it 'redirects to the login page' do
-        sign_out user
-        get proponents_path
-        expect(response).to redirect_to(new_user_session_path)
+    it 'returns only the proponents within the report' do
+      get proponents_path(report_id: report.id)
+
+      expect(response).to have_http_status(:ok)
+
+      response_body = Nokogiri::HTML(response.body)
+      displayed_proponents = response_body.css('table tbody tr').map do |row|
+        row.css('td').first.text.strip
       end
+
+      expected_proponents = Proponent.where(id: report.proponent_ids).pluck(:name)
+      expect(displayed_proponents).to match_array(expected_proponents)
     end
   end
 

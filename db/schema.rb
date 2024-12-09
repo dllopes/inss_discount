@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_181404) do
   create_table "proponent_salary_reports", force: :cascade do |t|
     t.string "salary_range", null: false
     t.integer "proponent_count", default: 0, null: false
+    t.integer "proponent_ids", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
