@@ -27,8 +27,8 @@
     <% @proponents.each do |proponent| %>
       <tr>
         <td><%= proponent.name %></td>
-        <td><%= proponent.cpf %></td>
-        <td><%= proponent.birth_date %></td>
+        <td><%= format_cpf(proponent.cpf) %></td>
+        <td><%= proponent.birth_date.strftime('%d/%m/%Y') %></td>
         <td><%= number_to_currency(proponent.salary, unit: "R$", separator: ",", delimiter: ".") %></td>
         <td>
           <%= link_to 'Show', proponent, class: 'btn btn-info btn-sm' %>

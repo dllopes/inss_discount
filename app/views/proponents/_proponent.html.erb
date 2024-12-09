@@ -8,7 +8,7 @@
       <dd class="col-sm-8"><%= proponent.name %></dd>
 
       <dt class="col-sm-4">CPF</dt>
-      <dd class="col-sm-8"><%= proponent.cpf %></dd>
+      <dd class="col-sm-8"><%= format_cpf(proponent.cpf) %></dd>
 
       <dt class="col-sm-4">Birth Date</dt>
       <dd class="col-sm-8"><%= proponent.birth_date.strftime('%d/%m/%Y') %></dd>
