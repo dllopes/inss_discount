@@ -22,7 +22,9 @@ RUN apt-get update -qq && \
     libreadline-dev \
     zlib1g-dev \
     curl \
-    ruby-dev && \
+    ruby-dev \
+    libxml2-dev \
+    libxslt1-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # Instalar o Bundler
@@ -55,9 +57,7 @@ ENV RAILS_ENV="development" \
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     libpq-dev \
-    libvips \
-    redis-tools \
-    postgresql-client && \
+    libvips && \
     rm -rf /var/lib/apt/lists/*
 
 # Copiar artefatos do estágio base

@@ -48,7 +48,14 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/inss_discount_test
       REDIS_URL: redis://redis:6379/0
       RAILS_ENV: test
-    command: bash -c "bundle exec rspec"
+    command: >
+      bash -c "
+        rm -f /rails/tmp/pids/server.pid &&
+        bundle install &&
+        bundle exec rails db:create &&
+        bundle exec rails db:migrate &&
+        bundle exec rspec
+      "
 
   sidekiq:
     build:
