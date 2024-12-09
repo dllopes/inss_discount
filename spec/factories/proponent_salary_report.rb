@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/factories/proponent_salary_reports.rb
 FactoryBot.define do
   factory :proponent_salary_report do
